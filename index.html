@@ -1,37 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>TravelBloom | Explore the World</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-
-<nav class="navbar">
-    <div class="logo">🌍 TravelBloom</div>
-    <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
-    </ul>
-</nav>
-
 <header class="hero">
-    <div class="hero-content">
+    <div class="hero-content fade-in">
         <h1>Discover Beautiful Destinations</h1>
         <p>Explore cultures, beaches, temples, and countries around the world with TravelBloom.</p>
 
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search beaches, temples, or countries...">
+            <input type="text" id="searchInput" placeholder="Search beaches, temples, or countries..." onkeyup="showSuggestions()">
+            <div id="suggestions" class="suggestions-box"></div>
             <button onclick="searchPlaces()">Search</button>
         </div>
 
-        <button class="book-btn">Book Now</button>
+        <button class="book-btn" onclick="openBooking()">Book Now</button>
     </div>
 </header>
 
-<section id="results" class="results-section"></section>
-
-<script src="js/script.js"></script>
-</body>
-</html>
+<!-- BOOKING POPUP -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeBooking()">&times;</span>
+        <h2>Book Your Trip</h2>
+        <form>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="date" required>
+            <button type="submit">Confirm Booking</button>
+        </form>
+    </div>
+</div>
