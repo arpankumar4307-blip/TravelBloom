@@ -37,3 +37,42 @@ function searchPlaces() {
         `;
     });
 }
+// 🔍 Search Suggestions
+const keywords = ["beach", "temple", "country"];
+
+function showSuggestions() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const box = document.getElementById("suggestions");
+    box.innerHTML = "";
+
+    if (!input) return;
+
+    const filtered = keywords.filter(k => k.includes(input));
+
+    filtered.forEach(word => {
+        const div = document.createElement("div");
+        div.textContent = word;
+        div.onclick = () => {
+            document.getElementById("searchInput").value = word;
+            box.innerHTML = "";
+        };
+        box.appendChild(div);
+    });
+}
+
+// 🧳 Booking Popup
+function openBooking() {
+    document.getElementById("bookingModal").style.display = "block";
+}
+
+function closeBooking() {
+    document.getElementById("bookingModal").style.display = "none";
+}
+
+// Close modal if clicked outside
+window.onclick = function(event) {
+    const modal = document.getElementById("bookingModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
