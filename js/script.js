@@ -15,17 +15,27 @@ const data = {
 
 function searchPlaces() {
     const input = document.getElementById("searchInput").value.toLowerCase();
-    const results = document.getElementById("results");
-    results.innerHTML = "";
+    const resultsBox = document.getElementById("searchResults");
+    resultsBox.innerHTML = "";
 
     let places = [];
 
     if (input.includes("beach")) places = data.beach;
     else if (input.includes("temple")) places = data.temple;
-    else if (input.includes("country")) {
-    const countryName = prompt("Enter a country name:");
-    if (countryName) fetchCountry(countryName);
-    return;
+    else if (input.includes("country")) places = data.country;
+    else {
+        resultsBox.innerHTML = "<p style='color:white;'>No recommendations found.</p>";
+        return;
+    }
+
+    places.forEach(place => {
+        resultsBox.innerHTML += `
+            <div class="search-card">
+                <img src="${place.img}" alt="${place.name}">
+                <h4>${place.name}</h4>
+            </div>
+        `;
+    });
 }
     else {
         results.innerHTML = "<h3>No recommendations found. Try beach, temple, or country.</h3>";
