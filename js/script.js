@@ -1,4 +1,31 @@
-// 🌍 DATA
+const destinations = [
+    { name: "Paris", description: "The city of lights and love." },
+    { name: "Tokyo", description: "A blend of tradition and futuristic life." },
+    { name: "New York", description: "The city that never sleeps." },
+    { name: "Bali", description: "Tropical paradise with beautiful beaches." }
+];
+
+function searchDestination() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    const matches = destinations.filter(dest => 
+        dest.name.toLowerCase().includes(input)
+    );
+
+    if (matches.length === 0) {
+        resultsDiv.innerHTML = "<p>No destinations found.</p>";
+        return;
+    }
+
+    matches.forEach(dest => {
+        const div = document.createElement("div");
+        div.innerHTML = `<h3>${dest.name}</h3><p>${dest.description}</p>`;
+        resultsDiv.appendChild(div);
+    });
+}
+
 const data = {
     beach: [
         { name: "Maldives Beach", img: "images/beach1.jpg" },
@@ -14,83 +41,27 @@ const data = {
     ]
 };
 
-
-
-// 🔎 LIVE SEARCH WHILE TYPING
-function handleSearchTyping() {
-    const input = document.getElementById("searchInput").value.toLowerCase().trim();
-    const resultsBox = document.getElementById("liveResults");
-    resultsBox.innerHTML = "";
-
-    if (input.length < 2) {
-        resultsBox.style.display = "none";
-        return;
-    }
-
-    let matches = [];
-
-    Object.values(data).forEach(category => {
-        category.forEach(place => {
-            if (place.name.toLowerCase().includes(input)) {
-                matches.push(place);
-            }
-        });
-    });
-
-    if (matches.length === 0) {
-        resultsBox.style.display = "none";
-        return;
-    }
-
-    matches.forEach(place => {
-        resultsBox.innerHTML += `
-            <div class="live-card" onclick="fillSearch('${place.name}')">
-                <img src="${place.img}" alt="${place.name}">
-                <span>${place.name}</span>
-            </div>
-        `;
-    });
-
-    resultsBox.style.display = "block";
-}
-
-
-
-// ✏️ FILL INPUT WHEN CLICK SUGGESTION
-function fillSearch(name) {
-    document.getElementById("searchInput").value = name;
-    document.getElementById("liveResults").style.display = "none";
-}
-
-
-
-// ❌ CLOSE RESULTS WHEN CLICK OUTSIDE
-document.addEventListener("click", function(e) {
-    if (!e.target.closest(".search-bar")) {
-        document.getElementById("liveResults").style.display = "none";
-    }
-});
-
-
-
-// 🔍 SEARCH BUTTON RESULT (BIGGER CARDS BELOW HERO)
 function searchPlaces() {
     const input = document.getElementById("searchInput").value.toLowerCase();
-    const resultsBox = document.getElementById("results");
-    resultsBox.innerHTML = "";
+    const results = document.getElementById("results");
+    results.innerHTML = "";
 
     let places = [];
 
     if (input.includes("beach")) places = data.beach;
     else if (input.includes("temple")) places = data.temple;
-    else if (input.includes("country")) places = data.country;
+    else if (input.includes("country")) {
+    const countryName = prompt("Enter a country name:");
+    if (countryName) fetchCountry(countryName);
+    return;
+}
     else {
-        resultsBox.innerHTML = "<h3>No recommendations found.</h3>";
+        results.innerHTML = "<h3>No recommendations found. Try beach, temple, or country.</h3>";
         return;
     }
 
     places.forEach(place => {
-        resultsBox.innerHTML += `
+        results.innerHTML += `
             <div class="card">
                 <img src="${place.img}" alt="${place.name}">
                 <h3>${place.name}</h3>
@@ -98,10 +69,30 @@ function searchPlaces() {
         `;
     });
 }
+// 🔍 Search Suggestions
+const keywords = ["beach", "temple", "country"];
 
+function showSuggestions() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const box = document.getElementById("suggestions");
+    box.innerHTML = "";
 
+    if (!input) return;
 
-// 🧳 BOOKING POPUP
+    const filtered = keywords.filter(k => k.includes(input));
+
+    filtered.forEach(word => {
+        const div = document.createElement("div");
+        div.textContent = word;
+        div.onclick = () => {
+            document.getElementById("searchInput").value = word;
+            box.innerHTML = "";
+        };
+        box.appendChild(div);
+    });
+}
+
+// 🧳 Booking Popup
 function openBooking() {
     document.getElementById("bookingModal").style.display = "block";
 }
@@ -110,16 +101,14 @@ function closeBooking() {
     document.getElementById("bookingModal").style.display = "none";
 }
 
+// Close modal if clicked outside
 window.onclick = function(event) {
     const modal = document.getElementById("bookingModal");
     if (event.target == modal) {
         modal.style.display = "none";
     }
 };
-
-
-
-// 🌄 HERO IMAGE SLIDER
+// 🌄 Hero Image Slider
 let slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
@@ -130,10 +119,27 @@ function changeSlide() {
 }
 
 setInterval(changeSlide, 4000);
+// 🌎 Fetch Country Info
+async function fetchCountry(countryName) {
+    const results = document.getElementById("results");
+    results.innerHTML = "<p>Loading country info...</p>";
 
+    try {
+        const res = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
+        const data = await res.json();
 
+        const country = data[0];
 
-// 🌙 DARK MODE
-function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
+        results.innerHTML = `
+            <div class="card">
+                <img src="${country.flags.png}" alt="flag">
+                <h3>${country.name.common}</h3>
+                <p><strong>Capital:</strong> ${country.capital}</p>
+                <p><strong>Region:</strong> ${country.region}</p>
+                <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
+            </div>
+        `;
+    } catch {
+        results.innerHTML = "<p>Country not found.</p>";
+    }
 }
