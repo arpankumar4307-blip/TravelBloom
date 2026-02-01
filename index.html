@@ -28,7 +28,27 @@
         <img src="images/hero2.jpg" class="slide" alt="Travel destination 2">
         <img src="images/hero3.jpg" class="slide" alt="Travel destination 3">
     </div>
-    <!-- 🏖 BEACH RECOMMENDATIONS -->
+   
+  <!-- Hero Content -->
+    <div class="hero-content fade-in">
+        <h1>Discover Beautiful Destinations</h1>
+        <p>Explore cultures, beaches, temples, and countries around the world with TravelBloom.</p>
+
+        <div class="search-bar">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search beaches, temples, or countries..." 
+                onkeyup="showSuggestions()"
+                autocomplete="off"
+            >
+            <div id="suggestions" class="suggestions-box"></div>
+            <button onclick="searchPlaces()">Search</button>
+        </div>
+
+        <button class="book-btn" onclick="openBooking()">Book Now</button>
+    </div>
+     <!-- 🏖 BEACH RECOMMENDATIONS -->
 <section class="recommend-section">
     <h2>Top Beach Destinations</h2>
     <div class="recommend-grid">
@@ -79,25 +99,6 @@
     </div>
 </section>
 
-    <!-- Hero Content -->
-    <div class="hero-content fade-in">
-        <h1>Discover Beautiful Destinations</h1>
-        <p>Explore cultures, beaches, temples, and countries around the world with TravelBloom.</p>
-
-        <div class="search-bar">
-            <input 
-                type="text" 
-                id="searchInput" 
-                placeholder="Search beaches, temples, or countries..." 
-                onkeyup="showSuggestions()"
-                autocomplete="off"
-            >
-            <div id="suggestions" class="suggestions-box"></div>
-            <button onclick="searchPlaces()">Search</button>
-        </div>
-
-        <button class="book-btn" onclick="openBooking()">Book Now</button>
-    </div>
 
 </header>
 
