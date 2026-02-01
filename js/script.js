@@ -129,3 +129,50 @@ async function fetchCountry(countryName) {
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
 }
+function handleSearchTyping() {
+    const input = document.getElementById("searchInput").value.toLowerCase().trim();
+    const resultsBox = document.getElementById("liveResults");
+    resultsBox.innerHTML = "";
+
+    if (input.length < 2) {
+        resultsBox.style.display = "none";
+        return;
+    }
+
+    let matches = [];
+
+    Object.values(data).forEach(category => {
+        category.forEach(place => {
+            if (place.name.toLowerCase().includes(input)) {
+                matches.push(place);
+            }
+        });
+    });
+
+    if (matches.length === 0) {
+        resultsBox.style.display = "none";
+        return;
+    }
+
+    matches.forEach(place => {
+        resultsBox.innerHTML += `
+            <div class="live-card" onclick="fillSearch('${place.name}')">
+                <img src="${place.img}" alt="${place.name}">
+                <span>${place.name}</span>
+            </div>
+        `;
+    });
+
+    resultsBox.style.display = "block";
+}
+
+function fillSearch(name) {
+    document.getElementById("searchInput").value = name;
+    document.getElementById("liveResults").style.display = "none";
+}
+
+document.addEventListener("click", function(e) {
+    if (!e.target.closest(".search-bar")) {
+        document.getElementById("liveResults").style.display = "none";
+    }
+});
