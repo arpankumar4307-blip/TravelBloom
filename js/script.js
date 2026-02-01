@@ -22,7 +22,11 @@ function searchPlaces() {
 
     if (input.includes("beach")) places = data.beach;
     else if (input.includes("temple")) places = data.temple;
-    else if (input.includes("country")) places = data.country;
+    else if (input.includes("country")) {
+    const countryName = prompt("Enter a country name:");
+    if (countryName) fetchCountry(countryName);
+    return;
+}
     else {
         results.innerHTML = "<h3>No recommendations found. Try beach, temple, or country.</h3>";
         return;
