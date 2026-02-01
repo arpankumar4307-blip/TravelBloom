@@ -87,3 +87,27 @@ function changeSlide() {
 }
 
 setInterval(changeSlide, 4000);
+// 🌎 Fetch Country Info
+async function fetchCountry(countryName) {
+    const results = document.getElementById("results");
+    results.innerHTML = "<p>Loading country info...</p>";
+
+    try {
+        const res = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
+        const data = await res.json();
+
+        const country = data[0];
+
+        results.innerHTML = `
+            <div class="card">
+                <img src="${country.flags.png}" alt="flag">
+                <h3>${country.name.common}</h3>
+                <p><strong>Capital:</strong> ${country.capital}</p>
+                <p><strong>Region:</strong> ${country.region}</p>
+                <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
+            </div>
+        `;
+    } catch {
+        results.innerHTML = "<p>Country not found.</p>";
+    }
+}
