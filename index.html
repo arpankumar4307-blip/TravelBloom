@@ -22,14 +22,12 @@
 <!-- 🌄 HERO SECTION -->
 <header class="hero">
 
-    <!-- Background Image Slider -->
     <div class="slider">
         <img src="images/hero1.jpg" class="slide active" alt="Travel destination 1">
         <img src="images/hero2.jpg" class="slide" alt="Travel destination 2">
         <img src="images/hero3.jpg" class="slide" alt="Travel destination 3">
     </div>
-   
-  <!-- Hero Content -->
+
     <div class="hero-content fade-in">
         <h1>Discover Beautiful Destinations</h1>
         <p>Explore cultures, beaches, temples, and countries around the world with TravelBloom.</p>
@@ -48,7 +46,10 @@
 
         <button class="book-btn" onclick="openBooking()">Book Now</button>
     </div>
-     <!-- 🏖 BEACH RECOMMENDATIONS -->
+
+</header>
+
+<!-- 🏖 BEACH RECOMMENDATIONS -->
 <section class="recommend-section">
     <h2>Top Beach Destinations</h2>
     <div class="recommend-grid">
@@ -99,10 +100,7 @@
     </div>
 </section>
 
-
-</header>
-
-<!-- 🔍 RESULTS SECTION -->
+<!-- 🔍 SEARCH RESULTS -->
 <section id="results" class="results-section"></section>
 
 <!-- 🧳 BOOKING POPUP -->
@@ -111,8 +109,8 @@
         <span class="close" onclick="closeBooking()">&times;</span>
         <h2>Book Your Trip</h2>
         <form onsubmit="event.preventDefault(); alert('Booking Confirmed!'); closeBooking();">
-            <input type="text" placeholder="Name" required>
-            <input type="email" placeholder="Email.id" required>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
             <input type="date" required>
             <button type="submit">Confirm Booking</button>
         </form>
