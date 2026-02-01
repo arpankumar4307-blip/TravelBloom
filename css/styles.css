@@ -211,3 +211,31 @@ body {
 .slide.active {
     opacity: 1;
 }
+.dark-toggle {
+    background: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background: #121212;
+    color: white;
+}
+
+.dark-mode .navbar {
+    background: #1f1f1f;
+}
+
+.dark-mode .card {
+    background: #1e1e1e;
+    color: white;
+}
+
+.dark-mode .modal-content {
+    background: #1e1e1e;
+    color: white;
+}
