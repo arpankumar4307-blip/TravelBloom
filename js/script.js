@@ -111,3 +111,7 @@ async function fetchCountry(countryName) {
         results.innerHTML = "<p>Country not found.</p>";
     }
 }
+// 🌙 Dark Mode Toggle
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+}
